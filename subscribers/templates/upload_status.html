@@ -1,0 +1,16 @@
+ 
+ {% if messages %}
+	 <div>CSV errors found: </div>
+	 <div>
+	   <ul>
+	        {% for message in messages %}
+	           <li>{{message|safe}}</li>
+	       	{% endfor %}
+	   </ul>
+	</div>
+{%else%}
+	<div>CSV successfully imported</div><br>
+	{% load static %}
+	<script src="{% static 'subscribers/js/reload_page.js' %}"></script>
+{% endif %}        
+

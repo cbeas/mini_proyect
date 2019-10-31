@@ -1,0 +1,62 @@
+{% extends 'admin_base.html' %}
+
+ {% block title %}
+ 	Newsletter Subscribers
+ {% endblock %}
+ {% block header %}
+ 	Newsletter Subscribers
+ {% endblock %}
+
+{% block content %}
+	<table class="table table-bordered">
+	  <thead>
+		<tr>
+		  <th>ID</th>
+		  <th>Full Name</th>
+		  <th>Email</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		{% for subscriber in subscribers %}
+		  <tr>
+			<td>{{ subscriber.id }}</td>
+			<td>{{ subscriber.full_name }}</td>
+			<td>{{ subscriber.email }}</td>
+		  </tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+
+	{% if is_paginated %}
+	  <ul class="pagination">
+		{% if page_obj.has_previous %}
+		  <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+		{% else %}
+		  <li class="disabled"><span>&laquo;</span></li>
+		{% endif %}
+		{% for i in paginator.page_range %}
+		  {% if page_obj.number == i %}
+			<li class="active p-1"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+		  {% else %}
+			<li class="p-1"><a href="?page={{ i }}">{{ i }}</a></li>
+		  {% endif %}
+		{% endfor %}
+		{% if page_obj.has_next %}
+		  <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+		{% else %}
+		  <li class="disabled"><span>&raquo;</span></li>
+		{% endif %}
+	  </ul>
+	{% endif %}
+
+
+  
+  <a href="{% url 'export_csv' %}" class="btn btn-info" role="button" aria-pressed="true">Export</a>	 
+  <button type="button" class="btn btn-info ml-3" data-toggle="modal" data-target="#uploadModal" id="importButton">Import</button>
+  
+
+  {% include "modal_upload.html" %}
+
+
+{% endblock %}	
+
